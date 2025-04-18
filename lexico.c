@@ -75,6 +75,89 @@ void automatoIdentificador(const char *palavra, int num_linha) {
     }
 }
 
+// Função para validar números inteiros e reais
+void automatoNumero(const char *aux, int num_linha) {
+    int s = 0; // Estado inicial
+    int tama_cont = 0; // Controle do tamanho
+    int i;
+    char c;
+
+    for (i = 0; i < strlen(aux); i++) {
+        c = aux[i];
+        switch (s) {
+            // Estado 0
+            case 0:
+                if (isdigit(c)) {
+                    s = 2;
+                    tama_cont++;
+                    if (strlen(aux) == 1) { // Validar número inteiro de um único dígito
+                        adicionarToken(aux, "num_inteiro", num_linha, 1);
+                        return;
+                    }
+                } else if (c == '-' || c == '+') { // Aceita sinais no início
+                    s = 1;
+                } else {
+                    s = 5;
+                }
+                break;
+
+            // Estado 1
+            case 1:
+                if (isdigit(c)) {
+                    tama_cont++;
+                    s = 2;
+                } else {
+                    s = 4;
+                }
+                break;
+
+            // Estado 2
+            case 2:
+                if (i == strlen(aux) - 1) { // Último caractere
+                    if (isdigit(c)) {
+                        adicionarToken(aux, "num_inteiro", num_linha, 1);
+                    } else {
+                        adicionarToken(aux, "Numero mal formado", num_linha, 0);
+                    }
+                    return;
+                } else if (c == '.') {
+                    s = 3;
+                } else if (isdigit(c)) {
+                    tama_cont++;
+                } else {
+                    s = 4;
+                }
+                break;
+
+            // Estado 3
+            case 3:
+                if (i == strlen(aux) - 1) { // Último caractere
+                    if (isdigit(c)) {
+                        adicionarToken(aux, "num_real", num_linha, 1);
+                    } else {
+                        adicionarToken(aux, "Numero mal formado", num_linha, 0);
+                    }
+                    return;
+                } else if (isdigit(c)) {
+                    tama_cont++;
+                } else {
+                    s = 4;
+                }
+                break;
+
+            // Estado 4
+            case 4:
+                adicionarToken(aux, "Numero mal formado", num_linha, 0);
+                return;
+
+            // Estado 5
+            case 5:
+                adicionarToken(aux, "Numero mal formado", num_linha, 0);
+                return;
+        }
+    }
+}
+
 // Função para imprimir os tokens
 void imprimirTokens() {
     for (int i = 0; i < tokenIndex; i++) {
@@ -89,9 +172,16 @@ void imprimirTokens() {
 // Teste do automatoIdentificador
 int main() {
     automatoIdentificador("var1", 1);
+    //o numero ao lado da váriavel seria o numero da linha em que essa variável está
     automatoIdentificador("123abc", 2);
     automatoIdentificador("var_2", 3);
     automatoIdentificador("Abc123", 4);
+    automatoNumero("123", 1);
+    automatoNumero("-123", 2);
+    automatoNumero("+3.14", 3);
+    automatoNumero("3.", 4);
+    automatoNumero(".45", 5);
+    automatoNumero("abc", 6);
 
     imprimirTokens();
     return 0;
