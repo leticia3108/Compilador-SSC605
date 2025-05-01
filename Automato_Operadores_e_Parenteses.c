@@ -27,10 +27,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 2, textFile);
 
@@ -63,10 +63,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 1, textFile);
 
@@ -99,10 +99,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 1, textFile);
 
@@ -124,8 +124,8 @@ return 0;
 int operadorDivMult(FILE* textFile){
 
 SSimb relacionais[] = {
-    {"/", "simbolo_mais"},
-    {"*", "simbolo_menos"}
+    {"/", "simbolo_divisao"},
+    {"*", "simbolo_multiplicacao"}
 };
 
 char lido[3], c;
@@ -134,10 +134,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 1, textFile);
 
@@ -167,10 +167,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 1, textFile);
 
@@ -190,7 +190,7 @@ return 0;
 int ParentesesEsquerdo(FILE* textFile){
 
 SSimb relacionais[] = {
-    {")", "parenteses_direito"},
+    {")", "parenteses_esquerdo"},
 };
 
 char lido[3], c;
@@ -199,10 +199,10 @@ int nLidos = 0;
 
 do {
     c = getc(textFile);
-    if (c == EOF) return 0; 
+    if (c == EOF) return 0;
 } while (isspace(c));
 
-ungetc(c, textFile); 
+ungetc(c, textFile);
 
 nLidos = fread (lido, sizeof(char), 1, textFile);
 
